@@ -32,12 +32,39 @@ import AVFoundation
 //    var lastInsertedRowID: Int64 = 0 // 用于获取自增插入后的主键值
 //}
 
+class Person {
+    var id: String = ""
+    var name: String = ""
+}
+
+class User {
+    var id: String = ""
+    var name: String = ""
+}
+
 class ViewController: UIViewController {
+    
+    let eventBus1 = EventBus()
+    let eventBus2 = EventBus()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.jjs_setBackgroundColor(.white)
+        
+        
+        eventBus1.addEventHandler(Person.self) { event in
+            print("--- person id 1 = \(event.vo.id)")
+        }
+        eventBus2.addEventHandler(Person.self) { event in
+            print("--- person id 2 = \(event.vo.id)")
+        }
+        eventBus1.addEventHandler(User.self) { event in
+            print("--- user id 1 = \(event.vo.id)")
+        }
+        eventBus2.addEventHandler(User.self) { event in
+            print("--- user id 2 = \(event.vo.id)")
+        }
         
         UIButton()
             .jjs_setTitle("Test")
@@ -48,8 +75,30 @@ class ViewController: UIViewController {
                 make.center.equalToSuperview()
             }
             .jjs_clickBlock { [weak self] in
-                self?.videoAniTest()
+//                self?.videoAniTest()
 //                Test.test()
+                
+                let p = Person()
+                p.id = "1212"
+                self?.eventBus1.triggerEvent(p)
+            }
+        
+        UIButton()
+            .jjs_setTitle("Test2")
+            .jjs_setTitleColor(.black)
+            .jjs_setBackgroundColor(.random)
+            .jjs_enlargeEdge(10, 10, 10, 10)
+            .jjs_layout(superView: view) { make in
+                make.centerX.equalToSuperview()
+                make.centerY.equalToSuperview().offset(100)
+            }
+            .jjs_clickBlock { [weak self] in
+//                self?.videoAniTest()
+//                Test.test()
+                
+                let p = User()
+                p.id = "1212"
+                self?.eventBus2.triggerEvent(p)
             }
     }
     

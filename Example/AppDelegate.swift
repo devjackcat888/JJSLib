@@ -6,14 +6,23 @@
 //
 
 import UIKit
+import JJSLib
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    let eventBus3 = EventBus()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        eventBus3.addEventHandler(Person.self) { event in
+            print("--- person id 3 = \(event.vo.id)")
+        }
+        eventBus3.addEventHandler(User.self) { event in
+            print("--- User id 3 = \(event.vo.id)")
+        }
+        
         return true
     }
 
