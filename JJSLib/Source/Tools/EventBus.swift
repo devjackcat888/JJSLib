@@ -34,7 +34,7 @@ private class EventCallbacker<T: AnyObject>: EventCallbackerProtocol {
     }
 }
 
-open class EventHandlerToken {
+public class EventHandlerToken {
     private var callBacker: EventCallbackerProtocol
     fileprivate init(callBacker: EventCallbackerProtocol) {
         self.callBacker = callBacker
@@ -92,7 +92,7 @@ class EventBusManagerHandler {
 }
 
 
-open class EventBus {
+public class EventBus {
     let uuid = UUID().uuidString
     
     fileprivate var callabckers: [EventHandlerToken] = []

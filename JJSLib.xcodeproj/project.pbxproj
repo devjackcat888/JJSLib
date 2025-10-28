@@ -20,6 +20,7 @@
 		4B71C6912EB0513300FEB9D3 /* PopoverMenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71C68F2EB0513300FEB9D3 /* PopoverMenuTableView.swift */; };
 		4B71C6932EB0513E00FEB9D3 /* HalfScreenPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71C6922EB0513E00FEB9D3 /* HalfScreenPopView.swift */; };
 		4B71C6952EB051DD00FEB9D3 /* EventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71C6942EB051DD00FEB9D3 /* EventBus.swift */; };
+		4B71C6B12EB0A04E00FEB9D3 /* DragableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71C6B02EB0A04E00FEB9D3 /* DragableView.swift */; };
 		606D846E9A4FFA1628625883 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585732979D6A31EFA04FE01 /* Pods_Example.framework */; };
 		675C7A9A2A10D2A500DAE872 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675C7A992A10D2A500DAE872 /* AppDelegate.swift */; };
 		675C7A9C2A10D2A500DAE872 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675C7A9B2A10D2A500DAE872 /* SceneDelegate.swift */; };
@@ -99,6 +100,7 @@
 		4B71C68F2EB0513300FEB9D3 /* PopoverMenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverMenuTableView.swift; sourceTree = "<group>"; };
 		4B71C6922EB0513E00FEB9D3 /* HalfScreenPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfScreenPopView.swift; sourceTree = "<group>"; };
 		4B71C6942EB051DD00FEB9D3 /* EventBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBus.swift; sourceTree = "<group>"; };
+		4B71C6B02EB0A04E00FEB9D3 /* DragableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragableView.swift; sourceTree = "<group>"; };
 		675C7A972A10D2A400DAE872 /* JJLib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JJLib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		675C7A992A10D2A500DAE872 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		675C7A9B2A10D2A500DAE872 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		67E3C4E72A0A9734001E5BE8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				4B71C6B02EB0A04E00FEB9D3 /* DragableView.swift */,
 				67B0B3752A77B16C005DBDF6 /* WatermarkView.swift */,
 				6770D7FD2A123B9100EAA75D /* TabBar */,
 				67E3C4E82A0A9734001E5BE8 /* AppToastView.swift */,
@@ -577,6 +580,7 @@
 				6770D8312A1363FC00EAA75D /* GumboHTMLReader.swift in Sources */,
 				67E3C4F62A0A9734001E5BE8 /* UIAlertController_Extension.swift in Sources */,
 				6770D7E62A12161A00EAA75D /* UITabBarController_Extension.swift in Sources */,
+				4B71C6B12EB0A04E00FEB9D3 /* DragableView.swift in Sources */,
 				675C7AB12A10D36A00DAE872 /* JJSPhotoGridView.swift in Sources */,
 				677F02412A1F62B500AC5FF7 /* CryptoUtil.swift in Sources */,
 				67B0D67E2A5FA90E0076035F /* PageRequestExecutor.swift in Sources */,
