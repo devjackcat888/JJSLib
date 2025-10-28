@@ -7,30 +7,30 @@
 
 import UIKit
 import JJSLib
-import WCDBSwift
+//import WCDBSwift
 import AVFoundation
 
-final class Sample: TableCodable {
-    var identifier: Int? = nil
-    var description: String? = nil
-    var offset: Int = 0
-    var username: String = "啦啦啦"
-    var debugDescription: String? = nil
-        
-    enum CodingKeys: String, CodingTableKey {
-        typealias Root = Sample
-        static let objectRelationalMapping = TableBinding(CodingKeys.self) {
-            BindColumnConstraint(identifier, isPrimary: true)
-        }
-        case identifier = "id"
-        case description
-        case offset = "db_offset"
-        case username = "username2"
-    }
-    
-    var isAutoIncrement: Bool = false // 用于定义是否使用自增的方式插入
-    var lastInsertedRowID: Int64 = 0 // 用于获取自增插入后的主键值
-}
+//final class Sample: TableCodable {
+//    var identifier: Int? = nil
+//    var description: String? = nil
+//    var offset: Int = 0
+//    var username: String = "啦啦啦"
+//    var debugDescription: String? = nil
+//        
+//    enum CodingKeys: String, CodingTableKey {
+//        typealias Root = Sample
+//        static let objectRelationalMapping = TableBinding(CodingKeys.self) {
+//            BindColumnConstraint(identifier, isPrimary: true)
+//        }
+//        case identifier = "id"
+//        case description
+//        case offset = "db_offset"
+//        case username = "username2"
+//    }
+//    
+//    var isAutoIncrement: Bool = false // 用于定义是否使用自增的方式插入
+//    var lastInsertedRowID: Int64 = 0 // 用于获取自增插入后的主键值
+//}
 
 class ViewController: UIViewController {
 

@@ -15,6 +15,10 @@
 		4298726C2CD9B5CD004230BE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4298726B2CD9B5CD004230BE /* String+Extension.swift */; };
 		4298726E2CD9B5E8004230BE /* SimpleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4298726D2CD9B5E8004230BE /* SimpleError.swift */; };
 		4AC5D176356E28CCB503AF37 /* Pods_JJSLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 075CE6E01609DAC28BF2D2DF /* Pods_JJSLib.framework */; };
+		4B71C68D2EB0510400FEB9D3 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71C68C2EB0510400FEB9D3 /* Throttler.swift */; };
+		4B71C6902EB0513300FEB9D3 /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71C68E2EB0513300FEB9D3 /* Popover.swift */; };
+		4B71C6912EB0513300FEB9D3 /* PopoverMenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71C68F2EB0513300FEB9D3 /* PopoverMenuTableView.swift */; };
+		4B71C6932EB0513E00FEB9D3 /* HalfScreenPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71C6922EB0513E00FEB9D3 /* HalfScreenPopView.swift */; };
 		606D846E9A4FFA1628625883 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585732979D6A31EFA04FE01 /* Pods_Example.framework */; };
 		675C7A9A2A10D2A500DAE872 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675C7A992A10D2A500DAE872 /* AppDelegate.swift */; };
 		675C7A9C2A10D2A500DAE872 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 675C7A9B2A10D2A500DAE872 /* SceneDelegate.swift */; };
@@ -48,7 +52,7 @@
 		67A349572AC4112B006D15AD /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 67A349562AC4112B006D15AD /* 1.png */; };
 		67A349592AC41426006D15AD /* target.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 67A349582AC41426006D15AD /* target.mp4 */; };
 		67A3495D2AC558BC006D15AD /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A3495C2AC558BC006D15AD /* Test.m */; };
-		67B0B36F2A7790C4005DBDF6 /* TouchTroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B0B36E2A7790C4005DBDF6 /* TouchTroughView.swift */; };
+		67B0B36F2A7790C4005DBDF6 /* TouchThroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B0B36E2A7790C4005DBDF6 /* TouchThroughView.swift */; };
 		67B0B3762A77B16C005DBDF6 /* WatermarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B0B3752A77B16C005DBDF6 /* WatermarkView.swift */; };
 		67B0B3782A77B355005DBDF6 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B0B3772A77B355005DBDF6 /* UIView_Extension.swift */; };
 		67B0D67E2A5FA90E0076035F /* PageRequestExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B0D67D2A5FA90E0076035F /* PageRequestExecutor.swift */; };
@@ -89,6 +93,10 @@
 		429872692CD9B58E004230BE /* CGPoint+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extension.swift"; sourceTree = "<group>"; };
 		4298726B2CD9B5CD004230BE /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		4298726D2CD9B5E8004230BE /* SimpleError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleError.swift; path = JJSLib/Source/Tools/SimpleError.swift; sourceTree = SOURCE_ROOT; };
+		4B71C68C2EB0510400FEB9D3 /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
+		4B71C68E2EB0513300FEB9D3 /* Popover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popover.swift; sourceTree = "<group>"; };
+		4B71C68F2EB0513300FEB9D3 /* PopoverMenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverMenuTableView.swift; sourceTree = "<group>"; };
+		4B71C6922EB0513E00FEB9D3 /* HalfScreenPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfScreenPopView.swift; sourceTree = "<group>"; };
 		675C7A972A10D2A400DAE872 /* JJLib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JJLib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		675C7A992A10D2A500DAE872 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		675C7A9B2A10D2A500DAE872 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,7 +131,7 @@
 		67A3495A2AC558BB006D15AD /* Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		67A3495B2AC558BC006D15AD /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
 		67A3495C2AC558BC006D15AD /* Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
-		67B0B36E2A7790C4005DBDF6 /* TouchTroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTroughView.swift; sourceTree = "<group>"; };
+		67B0B36E2A7790C4005DBDF6 /* TouchThroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchThroughView.swift; sourceTree = "<group>"; };
 		67B0B3752A77B16C005DBDF6 /* WatermarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkView.swift; sourceTree = "<group>"; };
 		67B0B3772A77B355005DBDF6 /* UIView_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
 		67B0D67D2A5FA90E0076035F /* PageRequestExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageRequestExecutor.swift; sourceTree = "<group>"; };
@@ -166,6 +174,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B71C6892EB0506900FEB9D3 /* RxSwift+Ex */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "RxSwift+Ex";
+			sourceTree = "<group>";
+		};
 		675C7A982A10D2A500DAE872 /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +237,7 @@
 				42935BD02B0F50C100A32332 /* Base64Util.swift */,
 				429872652CD9B4FE004230BE /* EncryptUtil.swift */,
 				429872672CD9B53F004230BE /* AppKeychain.swift */,
+				4B71C68C2EB0510400FEB9D3 /* Throttler.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -269,6 +285,7 @@
 		67E3C4E22A0A96CB001E5BE8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4B71C6892EB0506900FEB9D3 /* RxSwift+Ex */,
 				675C7AAF2A10D2F900DAE872 /* PhotoPicker */,
 				67E3C4EA2A0A9734001E5BE8 /* Category */,
 				6770D82C2A13637300EAA75D /* Tools */,
@@ -295,7 +312,10 @@
 				6770D7FD2A123B9100EAA75D /* TabBar */,
 				67E3C4E82A0A9734001E5BE8 /* AppToastView.swift */,
 				6770D7DA2A11FA3400EAA75D /* JJSViewController.swift */,
-				67B0B36E2A7790C4005DBDF6 /* TouchTroughView.swift */,
+				67B0B36E2A7790C4005DBDF6 /* TouchThroughView.swift */,
+				4B71C68E2EB0513300FEB9D3 /* Popover.swift */,
+				4B71C68F2EB0513300FEB9D3 /* PopoverMenuTableView.swift */,
+				4B71C6922EB0513E00FEB9D3 /* HalfScreenPopView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -465,9 +485,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -539,7 +563,7 @@
 				67E3C4F32A0A9734001E5BE8 /* UIView_Layout.swift in Sources */,
 				67E3C4F12A0A9734001E5BE8 /* AppToastView.swift in Sources */,
 				677F02362A1DD78900AC5FF7 /* ObservableFilterNil.swift in Sources */,
-				67B0B36F2A7790C4005DBDF6 /* TouchTroughView.swift in Sources */,
+				67B0B36F2A7790C4005DBDF6 /* TouchThroughView.swift in Sources */,
 				4298726A2CD9B58E004230BE /* CGPoint+Extension.swift in Sources */,
 				677F02302A1DBB3100AC5FF7 /* DelayClosure.swift in Sources */,
 				6770D8022A123BB100EAA75D /* JJSTabBar.swift in Sources */,
@@ -558,10 +582,12 @@
 				429872662CD9B4FE004230BE /* EncryptUtil.swift in Sources */,
 				4298726E2CD9B5E8004230BE /* SimpleError.swift in Sources */,
 				67B0B3762A77B16C005DBDF6 /* WatermarkView.swift in Sources */,
+				4B71C6932EB0513E00FEB9D3 /* HalfScreenPopView.swift in Sources */,
 				67E3C4F02A0A9734001E5BE8 /* UIView_JJSCreate.swift in Sources */,
 				4298726C2CD9B5CD004230BE /* String+Extension.swift in Sources */,
 				67E3C5012A0B3FEA001E5BE8 /* ListDelegate.swift in Sources */,
 				6770D8032A123BB100EAA75D /* UITabBarItem_Extension.swift in Sources */,
+				4B71C68D2EB0510400FEB9D3 /* Throttler.swift in Sources */,
 				677F02372A1DD78900AC5FF7 /* AutoDisposable.swift in Sources */,
 				6770D7DB2A11FA3400EAA75D /* JJSViewController.swift in Sources */,
 				420E37942A82852800B57A67 /* String_Extension.swift in Sources */,
@@ -574,6 +600,8 @@
 				677F02472A1F716D00AC5FF7 /* Downloader.swift in Sources */,
 				67E3C4F72A0A9734001E5BE8 /* UIImage_Extension.swift in Sources */,
 				6770D8052A123BB100EAA75D /* JJSTabBarButton.swift in Sources */,
+				4B71C6902EB0513300FEB9D3 /* Popover.swift in Sources */,
+				4B71C6912EB0513300FEB9D3 /* PopoverMenuTableView.swift in Sources */,
 				6770D8332A1364EB00EAA75D /* HtmlConverter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

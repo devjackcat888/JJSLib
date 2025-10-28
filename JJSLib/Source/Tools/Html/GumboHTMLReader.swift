@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 //import GumboHTMLTransform
 //import YYText
 

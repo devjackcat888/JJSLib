@@ -21,7 +21,7 @@ def base_depency
    pod 'YYText'
 #   pod 'GumboHTMLTransform', :git => 'https://gitee.com/devjackcat/gumbo-htmltransform.git'
 
-  pod 'WCDB.swift'
+  #pod 'WCDB.swift'
   pod 'MJRefresh'
   pod 'KeychainAccess'
   
@@ -33,4 +33,12 @@ end
 
 target 'Example' do
   base_depency
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = "13.0"
+    end
+  end
 end
