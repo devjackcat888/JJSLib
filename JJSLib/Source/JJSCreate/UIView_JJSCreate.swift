@@ -2,35 +2,73 @@
 //  UIView_JJSCreate.swift
 //  AniApp
 //
-//  Created by SharkAnimation on 2023/5/4.
+//  Created by JJS on 2023/5/4.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
-import Closures
-import SwiftUI
 import Kingfisher
-import SDWebImage
 
-private var customerDelegateKey = "CustomerDelegateKey"
-
-@available(iOS 13.0, *)
-public func wrapperSwiftUI(content: some View) -> UIView{
-    return UIHostingController(rootView: content).view.jjs_clearBackgroundColor()
+private struct AssociatedKeys {
+    static var customerDelegateKey: UInt8 = 0
+    static var topNameKey: UInt8 = 0
+    static var rightNameKey: UInt8 = 0
+    static var bottomNameKey: UInt8 = 0
+    static var leftNameKey: UInt8 = 0
+    static var UIControlClickDisposableKey: UInt8 = 0
+    static var TextFieldMaxLengthDisposableKey: UInt8 = 0
+    static var TextFieldMaxLengthWeakSelfKey: UInt8 = 0
+    
 }
 
-private var topNameKey: UInt8 = 0
-private var rightNameKey: UInt8 = 0
-private var bottomNameKey: UInt8 = 0
-private var leftNameKey: UInt8 = 0
+// 定义协议
+public protocol JJS_ColorRepresentable {}
+public protocol JJS_FontRepresentable {}
+
+public enum JJS_Color {
+    case color(_ color: UIColor)
+    case hex(_ hex: String, _ alpha: CGFloat = 1)
+}
+
+public enum JJS_Font{
+    case font(_ font: UIFont)
+    case size(_ size: CGFloat)
+}
+
+fileprivate func genColor(color: JJS_Color) -> UIColor? {
+    var _color: UIColor?
+    switch color {
+    case let .color(color):
+        _color = color
+    case let .hex(hex, alpha):
+        _color = UIColor(hex, alpha: alpha)
+    }
+    return _color
+}
+
+fileprivate func genFont(font: JJS_Font) -> UIFont? {
+    var _font: UIFont?
+    switch font {
+    case let .font(font):
+        _font = font
+    case let .size(size):
+        _font = .systemFont(ofSize: size)
+    }
+    return _font
+}
 
 public extension UIView {
     
     @discardableResult
     func jjs_layout(superView: UIView, _ closure: (_ make: ConstraintMaker) -> Void) -> Self {
-        superView.addSubview(self)
+        if let stackView = superView as? UIStackView {
+            stackView.addArrangedSubview(self)
+        } else {
+            superView.addSubview(self)
+        }
+        
         self.snp.makeConstraints(closure)
         return self
     }
@@ -64,6 +102,15 @@ public extension UIView {
     @discardableResult
     func jjs_setBackgroundColor(_ hexColor: UIColor?) -> Self {
         backgroundColor = hexColor
+        return self
+    }
+    @discardableResult
+    func jjs_setBackgroundColor(_ color: JJS_Color?) -> Self {
+        if let color {
+            backgroundColor = genColor(color: color)
+        } else {
+            backgroundColor = nil
+        }
         return self
     }
     @discardableResult
@@ -166,6 +213,15 @@ public extension UIButton {
         setTitleColor(color, for: state)
         return self
     }
+    @discardableResult
+    func jjs_setTitleColor(_ color: JJS_Color?, _ state: UIControl.State = .normal) -> Self {
+        if let color {
+            setTitleColor(genColor(color: color), for: state)
+        } else {
+            setTitleColor(nil, for: state)
+        }
+        return self
+    }
     
     @discardableResult
     func jjs_setImage(_ imageName: String, _ state: UIControl.State = .normal, renderColor: UIColor? = nil) -> Self {
@@ -196,6 +252,15 @@ public extension UIButton {
     }
     
     @discardableResult
+    func jjs_setFont(_ font: JJS_Font?) -> Self {
+        if let font {
+            titleLabel?.font = genFont(font: font)
+        } else {
+            titleLabel?.font = nil
+        }
+        return self
+    }
+    @discardableResult
     func jjs_setFont(_ font: UIFont?) -> Self {
         titleLabel?.font = font
         return self
@@ -203,6 +268,11 @@ public extension UIButton {
     @discardableResult
     func jjs_setFontSize(_ size: CGFloat) -> Self {
         titleLabel?.font = .systemFont(ofSize: size)
+        return self
+    }
+    @discardableResult
+    func jjs_setTitleAlignment(_ value: NSTextAlignment) -> Self {
+        titleLabel?.textAlignment = value
         return self
     }
     
@@ -227,6 +297,13 @@ public extension UIButton {
         adjustsImageWhenHighlighted = adjusts
         return self
     }
+    
+    @discardableResult
+    func jjs_setContentEdgeInsets(_ value: UIEdgeInsets) -> Self {
+        contentEdgeInsets = value
+        return self
+    }
+    
     
     @discardableResult
     func jjs_setImagePosition(_ position: JJSImagePosition, spacing: CGFloat) -> Self {
@@ -274,17 +351,17 @@ public extension UIButton {
     
     @discardableResult
     func jjs_enlargeEdge(_ left: CGFloat, _ top: CGFloat, _ right: CGFloat, _ bottom: CGFloat) -> Self {
-        objc_setAssociatedObject(self, &topNameKey, NSNumber(value: Float(top)), .OBJC_ASSOCIATION_COPY_NONATOMIC)
-        objc_setAssociatedObject(self, &rightNameKey, NSNumber(value: Float(right)), .OBJC_ASSOCIATION_COPY_NONATOMIC)
-        objc_setAssociatedObject(self, &bottomNameKey, NSNumber(value: Float(bottom)), .OBJC_ASSOCIATION_COPY_NONATOMIC)
-        objc_setAssociatedObject(self, &leftNameKey, NSNumber(value: Float(left)), .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        objc_setAssociatedObject(self, &AssociatedKeys.topNameKey, NSNumber(value: Float(top)), .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        objc_setAssociatedObject(self, &AssociatedKeys.rightNameKey, NSNumber(value: Float(right)), .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        objc_setAssociatedObject(self, &AssociatedKeys.bottomNameKey, NSNumber(value: Float(bottom)), .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        objc_setAssociatedObject(self, &AssociatedKeys.leftNameKey, NSNumber(value: Float(left)), .OBJC_ASSOCIATION_COPY_NONATOMIC)
         return self
     }
     private func enlargedRect() -> CGRect {
-        let topEdge = objc_getAssociatedObject(self, &topNameKey) as? NSNumber
-        let rightEdge = objc_getAssociatedObject(self, &rightNameKey) as? NSNumber
-        let bottomEdge = objc_getAssociatedObject(self, &bottomNameKey) as? NSNumber
-        let leftEdge = objc_getAssociatedObject(self, &leftNameKey) as? NSNumber
+        let topEdge = objc_getAssociatedObject(self, &AssociatedKeys.topNameKey) as? NSNumber
+        let rightEdge = objc_getAssociatedObject(self, &AssociatedKeys.rightNameKey) as? NSNumber
+        let bottomEdge = objc_getAssociatedObject(self, &AssociatedKeys.bottomNameKey) as? NSNumber
+        let leftEdge = objc_getAssociatedObject(self, &AssociatedKeys.leftNameKey) as? NSNumber
         
         if let topEdge = topEdge, let rightEdge = rightEdge, let bottomEdge = bottomEdge, let leftEdge = leftEdge {
             return CGRect(x: bounds.origin.x - CGFloat(leftEdge.floatValue),
@@ -309,14 +386,13 @@ public extension UIButton {
     }
 }
 
-private var UIControlClickDisposable: String = ""
 public extension UIControl {
 
     private func getClickDisposable() -> Disposable?{
-        return objc_getAssociatedObject(self, &UIControlClickDisposable) as? Disposable
+        return objc_getAssociatedObject(self, &AssociatedKeys.UIControlClickDisposableKey) as? Disposable
     }
     private func updateClickDisposable(_ bag: Disposable?){
-        objc_setAssociatedObject(self, &UIControlClickDisposable, bag, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &AssociatedKeys.UIControlClickDisposableKey, bag, .OBJC_ASSOCIATION_RETAIN)
     }
     
     @discardableResult
@@ -351,6 +427,229 @@ public extension UIControl {
     }
 }
 
+public extension UITextField {
+    
+    @discardableResult
+    func jjs_setText(_ text: String?) -> Self{
+        self.text = text
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setFont(_ font: JJS_Font?) -> Self {
+        if let font {
+            self.font = genFont(font: font)
+        } else {
+            self.font = nil
+        }
+        return self
+    }
+    @discardableResult
+    func jjs_setFont(_ font: UIFont) -> Self{
+        self.font = font
+        return self
+    }
+    @discardableResult
+    func jjs_setFontSize(_ fontSize: CGFloat) -> Self{
+        self.font = .systemFont(ofSize: fontSize)
+        return self
+    }
+    @discardableResult
+    func jjs_setMinimumFontSize(_ fontSize: CGFloat) -> Self{
+        self.minimumFontSize = fontSize
+        return self
+    }
+    
+
+    @discardableResult
+    func jjs_setTextColor(_ color: String, alpha: CGFloat = 1) -> Self{
+        self.textColor = UIColor(color,alpha: alpha)
+        return self
+    }
+    @discardableResult
+    func jjs_setTextColor(_ color: UIColor?) -> Self{
+        self.textColor = color
+        return self
+    }
+    @discardableResult
+    func jjs_setTextColor(_ color: JJS_Color?, _ state: UIControl.State = .normal) -> Self {
+        if let color {
+            self.textColor = genColor(color: color)
+        } else {
+            self.textColor = nil
+        }
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setTextAlignment(_ align: NSTextAlignment) -> Self{
+        self.textAlignment = align
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setReturnKeyType(_ value: UIReturnKeyType) -> Self{
+        self.returnKeyType = value
+        return self
+    }
+    @discardableResult
+    func jjs_setPlaceholder(_ value: String) -> Self{
+        self.placeholder = value
+        return self
+    }
+    @discardableResult
+    func jjs_setBorderStyle(_ value: UITextField.BorderStyle) -> Self{
+        self.borderStyle = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setAttributedPlaceholder(_ text: String, color: JJS_Color? = nil, font: JJS_Font? = nil) -> Self{
+        var attributes = [NSAttributedString.Key:Any]()
+        if let font, let _font = genFont(font: font) {
+            attributes[.font] = _font
+        }
+        if let color, let _color = genColor(color: color) {
+            attributes[.foregroundColor] = _color
+        }
+        self.attributedPlaceholder = NSAttributedString(string: text, attributes: attributes)
+        return self
+    }
+    @discardableResult
+    func jjs_setAttributedPlaceholder(_ text: String, attributes: [NSAttributedString.Key:Any]?) -> Self{
+        let att = NSAttributedString(string: text, attributes: attributes)
+        self.attributedPlaceholder = att
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setAttributedText(_ value: NSAttributedString) -> Self{
+        self.attributedText = value
+        return self
+    }
+    @discardableResult
+    func jjs_setAttributedText(_ text: String, attributes: [NSAttributedString.Key:Any]?) -> Self{
+        let att = NSAttributedString(string: text, attributes: attributes)
+        self.attributedText = att
+        return self
+    }
+    @discardableResult
+    func jjs_setAttributedText(_ text: String, color: JJS_Color? = nil, font: JJS_Font? = nil) -> Self{
+        var attributes = [NSAttributedString.Key:Any]()
+        if let font, let _font = genFont(font: font) {
+            attributes[.font] = _font
+        }
+        if let color, let _color = genColor(color: color) {
+            attributes[.foregroundColor] = _color
+        }
+        self.attributedText = NSAttributedString(string: text, attributes: attributes)
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setKeyboardType(_ value: UIKeyboardType) -> Self{
+        self.keyboardType = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setClearsOnBeginEditing(_ value: Bool) -> Self{
+        self.clearsOnBeginEditing = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setAdjustsFontSizeToFitWidth(_ value: Bool) -> Self{
+        self.adjustsFontSizeToFitWidth = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setDisabledBackground(_ value: UIImage?) -> Self{
+        self.disabledBackground = value
+        return self
+    }
+    @discardableResult
+    func jjs_setBackground(_ value: UIImage?) -> Self{
+        self.background = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setClearButtonMode(_ value: UITextField.ViewMode) -> Self{
+        self.clearButtonMode = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setDelegate(_ value: (any UITextFieldDelegate)?) -> Self{
+        self.delegate = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setLeftView(_ value: UIView?) -> Self{
+        self.leftView = value
+        return self
+    }
+    @discardableResult
+    func jjs_setRightView(_ value: UIView?) -> Self{
+        self.rightView = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_setLeftViewMode(_ value: UITextField.ViewMode) -> Self{
+        self.leftViewMode = value
+        return self
+    }
+    @discardableResult
+    func jjs_setRightViewMode(_ value: UITextField.ViewMode) -> Self{
+        self.rightViewMode = value
+        return self
+    }
+    
+    @discardableResult
+    func jjs_editingDidEndClosure(_ closure: @escaping () -> Void) -> Self{
+        self.rx.controlEvent(.editingDidEnd)
+                    .subscribe(onNext: {
+                        closure()
+                    })
+                    .disposing(with: self)
+        return self
+    }
+    
+    private func getMaxLengthDisposable() -> Disposable?{
+        return objc_getAssociatedObject(self, &AssociatedKeys.TextFieldMaxLengthDisposableKey) as? Disposable
+    }
+    private func updateMaxLengthDisposable(_ bag: Disposable?){
+        objc_setAssociatedObject(self, &AssociatedKeys.TextFieldMaxLengthDisposableKey, bag, .OBJC_ASSOCIATION_RETAIN)
+    }
+    private func updateWeakSelfDisposable(_ obj: AnyObject?){
+        objc_setAssociatedObject(self, &AssociatedKeys.TextFieldMaxLengthWeakSelfKey, obj, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+    
+    @discardableResult
+    func jjs_setMaxLength(_ maxLength: Int) -> Self{
+        updateWeakSelfDisposable(nil)
+        let weakRef = WeakRef(self)
+        updateWeakSelfDisposable(weakRef)
+        // 释放资源
+        getMaxLengthDisposable()?.dispose()
+        updateMaxLengthDisposable(nil)
+//         重新添加资源
+        let bag = self.rx.text
+            .observe(on: MainScheduler.asyncInstance) // 确保在主线程
+            .subscribe(onNext: {  text in
+                guard let currentText = text, currentText.count > maxLength else { return }
+                let index = currentText.index(currentText.startIndex, offsetBy: maxLength)
+                (weakRef.object as? UITextField)?.text = String(currentText[..<index])
+            })
+        updateMaxLengthDisposable(bag)
+        return self
+    }
+}
+
 public extension UILabel {
     
     convenience init(text: String?, font: CGFloat, textColor: UIColor?, align: NSTextAlignment = .left) {
@@ -377,6 +676,15 @@ public extension UILabel {
     }
     
     @discardableResult
+    func jjs_setFont(_ font: JJS_Font?) -> Self {
+        if let font {
+            self.font = genFont(font: font)
+        } else {
+            self.font = nil
+        }
+        return self
+    }
+    @discardableResult
     func jjs_setFont(_ font: UIFont) -> Self{
         self.font = font
         return self
@@ -395,6 +703,15 @@ public extension UILabel {
     @discardableResult
     func jjs_setTextColor(_ color: UIColor?) -> Self{
         self.textColor = color
+        return self
+    }
+    @discardableResult
+    func jjs_setTextColor(_ color: JJS_Color?, _ state: UIControl.State = .normal) -> Self {
+        if let color {
+            self.textColor = genColor(color: color)
+        } else {
+            self.textColor = nil
+        }
         return self
     }
     
@@ -581,7 +898,7 @@ public extension UISlider {
         addTarget(target, action: #selector(JJSSliderTarget.changeBegin(_:)), for: .editingDidBegin)
         addTarget(target, action: #selector(JJSSliderTarget.changeEnd(_:)), for: .editingDidEnd)
     
-        objc_setAssociatedObject(self, &customerDelegateKey, target, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &AssociatedKeys.customerDelegateKey, target, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
         
         return self
     }
@@ -676,9 +993,9 @@ public extension UIScrollView {
 
 public extension UICollectionView {
     
-    private func updateCustomerDelegate<T>(_ delegate: JJSCollectionViewDelegate<T>?) {
-        objc_setAssociatedObject(self, &customerDelegateKey, delegate, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-    }
+//    private func updateCustomerDelegate<T>(_ delegate: JJSCollectionViewDelegate<T>?) {
+//        objc_setAssociatedObject(self, &customerDelegateKey, delegate, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+//    }
 //    private func getCustomerDelegate<T>() -> JJSCollectionViewDelegate<T>? {
 //        return objc_getAssociatedObject(self, &customerDelegateKey) as? JJSCollectionViewDelegate
 //    }
@@ -716,23 +1033,23 @@ public extension UICollectionView {
         return self
     }
     
-    @discardableResult
-    func jjs_customerDelegate<T:JJSListItemProtocol>(dataSource: @escaping (() -> [T]), dataForCell: @escaping ((_ data: T, _ cell: UICollectionViewCell, _ indexPath: IndexPath) -> Void), didSelected: ((_ indexPath: IndexPath, _ data: T) -> Void)? = nil, scrollViewDelegate: (UIScrollViewDelegate)? = nil) -> Self {
-        
-        let delegate = JJSCollectionViewDelegate(datasourceClosure: dataSource, dataForCellClosure: dataForCell, didSelectedClosure: didSelected, scrollViewDelegate: scrollViewDelegate)
-        
-//        let delegate = JJSCollectionViewDelegate(datasourceClosure: dataSource) { data, cell, indexPath in
-//            dataForCell(data, cell, indexPath)
+//    @discardableResult
+//    func jjs_customerDelegate<T:JJSListItemProtocol>(dataSource: @escaping (() -> [T]), dataForCell: @escaping ((_ data: T, _ cell: UICollectionViewCell, _ indexPath: IndexPath) -> Void), didSelected: ((_ indexPath: IndexPath, _ data: T) -> Void)? = nil, scrollViewDelegate: (UIScrollViewDelegate)? = nil) -> Self {
 //
-//        } didSelectedClosure: { indexPath, data in
-//            if let didSelected {
-//                didSelected(indexPath, data)
-//            }
-//        }
-        updateCustomerDelegate(delegate)
-        self.jjs_setDelegate(delegate)
-        return self
-    }
+//        let delegate = JJSCollectionViewDelegate(datasourceClosure: dataSource, dataForCellClosure: dataForCell, didSelectedClosure: didSelected, scrollViewDelegate: scrollViewDelegate)
+//
+////        let delegate = JJSCollectionViewDelegate(datasourceClosure: dataSource) { data, cell, indexPath in
+////            dataForCell(data, cell, indexPath)
+////
+////        } didSelectedClosure: { indexPath, data in
+////            if let didSelected {
+////                didSelected(indexPath, data)
+////            }
+////        }
+//        updateCustomerDelegate(delegate)
+//        self.jjs_setDelegate(delegate)
+//        return self
+//    }
 }
 
 public extension UITableView {
@@ -811,6 +1128,15 @@ public extension UITableView {
     @discardableResult
     func jjs_setSeparatorColor(_ color: UIColor?) -> Self {
         self.separatorColor = color
+        return self
+    }
+    @discardableResult
+    func jjs_setSeparatorColor(_ color: JJS_Color?, _ state: UIControl.State = .normal) -> Self {
+        if let color {
+            self.separatorColor = genColor(color: color)
+        } else {
+            self.separatorColor = nil
+        }
         return self
     }
     @discardableResult
@@ -894,5 +1220,28 @@ extension UIEdgeInsets {
 extension CGPoint {
     func jjs_negate() -> CGPoint {
         return CGPoint(x: -x, y: -y)
+    }
+}
+
+public class JJSSliderTarget {
+    
+    let changing: (Float) -> Void
+    let changeBegin: (Float) -> Void
+    let changeEnd: (Float) -> Void
+
+    init(changing: @escaping (Float) -> Void, changeBegin: @escaping (Float) -> Void, changeEnd: @escaping (Float) -> Void) {
+        self.changing = changing
+        self.changeBegin = changeBegin
+        self.changeEnd = changeEnd
+    }
+
+    @objc func valueChanged(_ sender: UISlider) {
+        changing(sender.value)
+    }
+    @objc func changeBegin(_ sender: UISlider) {
+        changeBegin(sender.value)
+    }
+    @objc func changeEnd(_ sender: UISlider) {
+        changeEnd(sender.value)
     }
 }

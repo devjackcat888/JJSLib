@@ -106,27 +106,3 @@ class JJSCollectionViewDelegate<T:JJSListItemProtocol>: NSObject, UICollectionVi
         scrollViewDelegate?.scrollViewDidChangeAdjustedContentInset?(scrollView)
     }
 }
-
-
-class JJSSliderTarget {
-    
-    let changing: (Float) -> Void
-    let changeBegin: (Float) -> Void
-    let changeEnd: (Float) -> Void
-
-    init(changing: @escaping (Float) -> Void, changeBegin: @escaping (Float) -> Void, changeEnd: @escaping (Float) -> Void) {
-        self.changing = changing
-        self.changeBegin = changeBegin
-        self.changeEnd = changeEnd
-    }
-
-    @objc func valueChanged(_ sender: UISlider) {
-        changing(sender.value)
-    }
-    @objc func changeBegin(_ sender: UISlider) {
-        changeBegin(sender.value)
-    }
-    @objc func changeEnd(_ sender: UISlider) {
-        changeEnd(sender.value)
-    }
-}
